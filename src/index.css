@@ -2,6 +2,7 @@
 
 :root {
   font-family: "Open Sans", sans-serif;
+  background-color: #def7fc;
 }
 
 a {
@@ -27,7 +28,6 @@ main {
 
 h1 {
   font-size: 3.2em;
-  line-height: 1.1;
 }
 
 p {
@@ -35,6 +35,7 @@ p {
   font-weight: 600;
   color: #1a1a1a;
   margin: 0px;
+  padding: 0px;
 }
 
 span {
@@ -51,12 +52,12 @@ button {
   font-weight: 500;
   color: #ffffff;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #0095a0;
   cursor: pointer;
   transition: background-color 0.25s;
 }
 button:hover {
-  background-color: #383838;
+  background-color: #00646b;
 }
 button:focus,
 button:focus-visible {
@@ -64,7 +65,31 @@ button:focus-visible {
 }
 
 .btnDanger {
-  background-color: #f12b2b;
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f12b2b;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.btnDanger:hover {
+  color: #f10606;
+  background-color: transparent;
+}
+
+.btnEdit {
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: 700;
+  color: #222222;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.btnEdit:hover {
+  color: #000000;
+  background-color: transparent;
 }
 
 input {
@@ -101,7 +126,7 @@ ul {
 
 .btnList {
   display: flex;
-  gap: 8px;
+  gap: 0px;
 }
 
 .formTask {
@@ -109,4 +134,16 @@ ul {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+}
+
+.itemList {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.IconAling {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
