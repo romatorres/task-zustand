@@ -15,12 +15,13 @@ export function TaskList() {
   };
 
   return (
-    <main>
-      <h1>Suas Tarefas!</h1>
-      <p>
-        Você tem <span>{tasks.length}</span> tarefas em aberto.
-      </p>
-
+    <main className="container">
+      <header>
+        <h1>Suas Tarefas!</h1>
+        <p>
+          Você tem <span>{tasks.length}</span> tarefas em aberto.
+        </p>
+      </header>
       <form onSubmit={handleAddTask} className="formTask">
         <input
           type="text"
@@ -28,9 +29,16 @@ export function TaskList() {
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
         />
-        <button type="submit">Adicione uma tarefa</button>
+        <button type="submit" className="add-btn">
+          Adicione uma tarefa
+        </button>
       </form>
       <TaskItem />
+      <footer>
+        <p>Total de tarefas:</p>
+        <p>Tarefas pendentes:</p>
+        <p>Tarefas finalizadas:</p>
+      </footer>
     </main>
   );
 }

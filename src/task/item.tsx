@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { SquarePen, Trash2, X } from "lucide-react";
 import { useTaskStore } from "../store/task";
 
 export function TaskItem() {
@@ -15,9 +15,6 @@ export function TaskItem() {
               <p>{task.text}</p>
             </div>
             <div className="btnList">
-              <button className="btnEdit" onClick={() => removeTask(task.id)}>
-                Concluida
-              </button>
               <button
                 className="btnEdit"
                 onClick={() =>
@@ -27,10 +24,10 @@ export function TaskItem() {
                   )
                 }
               >
-                Editar
+                <SquarePen />
               </button>
               <button className="btnDanger" onClick={() => removeTask(task.id)}>
-                Excluir
+                <Trash2 />
               </button>
             </div>
           </li>
