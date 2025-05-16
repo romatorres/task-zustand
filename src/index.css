@@ -2,10 +2,11 @@
 
 :root {
   --primary: #6c5ce7;
-  --secondary: #a29bfe;
+  --secondary: #8880ff;
   --accent: #fd79a8;
   --light: #f8f9fa;
   --dark: #2d3436;
+  --gray: #929292;
   --success: #00b894;
   --warning: #fdcb6e;
   --danger: #d63031;
@@ -42,7 +43,7 @@ header {
 }
 
 .formTask {
-  padding: 1.5rem 2rem;
+  padding: 2rem 2rem;
   display: flex;
   gap: 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -69,6 +70,8 @@ input:focus {
   border: none;
   border-radius: 8px;
   padding: 0 1.5rem;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -78,11 +81,14 @@ input:focus {
 }
 
 .add-btn:hover {
-  background-color: #5649d1;
+  background-color: var(--secondary);
   transform: translateY(-2px);
 }
 
 .btnDanger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: transparent;
   border: none;
   color: var(--danger);
@@ -96,6 +102,9 @@ input:focus {
 }
 
 .btnEdit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: transparent;
   border: none;
   color: var(--primary);
@@ -108,6 +117,14 @@ input:focus {
   background-color: transparent;
 }
 
+.btnChek {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+}
+
 .ulList {
   padding: 1rem 0;
 }
@@ -117,45 +134,58 @@ input:focus {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.btnList {
-  display: flex;
-  gap: 0px;
 }
 
 .itemList {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 12px;
 }
 
-.IconAling {
+.btnList {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 h1 {
   font-size: 3.2em;
 }
 
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
 p {
   font-size: 18px;
   font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
 
 span {
-  font-size: 36px;
-  font-weight: 800;
-  color: #f12b2b;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+span.completedTasks {
+  color: var(--success);
+}
+
+span.pendingTasks {
+  color: var(--danger);
 }
 
 footer {
   display: flex;
   justify-content: space-between;
   padding: 2rem 2rem;
-  border-top: 1px solid var(--dark);
+}
+
+.textDone {
+  text-decoration: line-through;
+  color: var(--gray);
 }

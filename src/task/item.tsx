@@ -1,18 +1,22 @@
-import { SquarePen, Trash2, X } from "lucide-react";
+import { SquarePen, Trash2, CheckCircle, Circle } from "lucide-react";
 import { useTaskStore } from "../store/task";
 
 export function TaskItem() {
-  const { tasks, removeTask, editTask } = useTaskStore();
+  const { tasks, removeTask, editTask, toggleTask } = useTaskStore();
   return (
     <div>
       <ul className="ulList">
         {tasks.map((task) => (
           <li className="liList" key={task.id}>
             <div className="itemList">
-              <span className="IconAling">
-                <X size={36} color="#f03333" />
-              </span>
-              <p>{task.text}</p>
+              <button className="btnChek" onClick={() => toggleTask(task.id)}>
+                {task.done ? (
+                  <CheckCircle size={32} color="#00b894" />
+                ) : (
+                  <Circle size={32} color="#d63031" />
+                )}
+              </button>
+              <h3 className={task.done ? "textDone" : "none"}>{task.text}</h3>
             </div>
             <div className="btnList">
               <button

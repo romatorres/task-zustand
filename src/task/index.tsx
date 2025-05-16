@@ -6,21 +6,21 @@ export function TaskList() {
   const [newTask, setNewTask] = useState("");
   const { tasks, addTask } = useTaskStore();
 
+  /* Envia o evento do formulário para adicionar uma nova tarefa, e evita enviar uma tarefa vazia. */
   const handleAddTask = (e: FormEvent) => {
     e.preventDefault();
-
+    if (!newTask.trim()) return;
     addTask(newTask);
-
     setNewTask("");
   };
+
+  const completedTasks = tasks.filter((task) => task.done).length;
+  const pendingTasks = tasks.length - completedTasks;
 
   return (
     <main className="container">
       <header>
         <h1>Suas Tarefas!</h1>
-        <p>
-          Você tem <span>{tasks.length}</span> tarefas em aberto.
-        </p>
       </header>
       <form onSubmit={handleAddTask} className="formTask">
         <input
@@ -35,9 +35,17 @@ export function TaskList() {
       </form>
       <TaskItem />
       <footer>
-        <p>Total de tarefas:</p>
-        <p>Tarefas pendentes:</p>
-        <p>Tarefas finalizadas:</p>
+        <p>
+          Total de tarefas: <span>{tasks.length}</span>
+        </p>
+        <p>
+          Tarefas pendentes:{" "}
+          <span className="pendingTasks">{pendingTasks}</span>
+        </p>
+        <p>
+          Tarefas finalizadas:{" "}
+          <span className="completedTasks">{completedTasks}</span>
+        </p>
       </footer>
     </main>
   );
