@@ -1,10 +1,16 @@
-import { type FormEvent, useState } from "react";
-import { TaskItem } from "./item";
-import { useTaskStore } from "../store/task";
+"use client";
 
-export function TaskList() {
+import { type FormEvent, useState, useEffect } from "react";
+import { TaskItem } from "./item";
+import { useTaskStore } from "../../stores/taskStore";
+
+export default function TaskList() {
   const [newTask, setNewTask] = useState("");
-  const { tasks, addTask } = useTaskStore();
+  const { tasks, addTask, fetchTasks } = useTaskStore();
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
 
   /* Envia o evento do formulário para adicionar uma nova tarefa, e evita enviar uma tarefa vazia. */
   const handleAddTask = (e: FormEvent) => {
@@ -50,5 +56,3 @@ export function TaskList() {
     </main>
   );
 }
-
-export default TaskList;

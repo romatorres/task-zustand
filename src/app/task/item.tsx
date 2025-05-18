@@ -1,5 +1,5 @@
 import { SquarePen, Trash2, CheckCircle, Circle } from "lucide-react";
-import { useTaskStore } from "../store/task";
+import { useTaskStore } from "../../stores/taskStore";
 
 export function TaskItem() {
   const { tasks, removeTask, editTask, toggleTask } = useTaskStore();
