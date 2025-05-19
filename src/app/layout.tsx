@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -24,6 +25,7 @@ export default function RootLayout({
         cz-shortcut-listen="true"
       >
         {children}
+        <Toaster position="top-right" />
       </body>
     </html>
   );
