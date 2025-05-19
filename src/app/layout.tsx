@@ -20,7 +20,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${openSans.variable} cz-shortcut-listen="true" antialiased`}
+        className={`${openSans.variable} antialiased`}
+        cz-shortcut-listen="true"
       >
         {children}
       </body>
