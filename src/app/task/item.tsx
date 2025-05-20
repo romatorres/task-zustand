@@ -4,11 +4,14 @@ import { useTaskStore } from "../../stores/taskStore";
 export default function TaskItem() {
   const { tasks, removeTask, editTask, toggleTask } = useTaskStore();
   return (
-    <div className="mx-auto max-w-3/5 mt-6">
-      <ul className="ulList">
+    <div className="mx-auto max-w-3/5 mt-6 font-open-sans">
+      <ul className="flex flex-col gap-4">
         {tasks.map((task) => (
-          <li className="liList" key={task.id}>
-            <div className="itemList">
+          <li
+            className="flex justify-between items-center px-6 py-9 bg-[#f7f2fc] rounded-lg shadow-md text-xl"
+            key={task.id}
+          >
+            <div className="flex items-center gap-3">
               <button className="btnChek" onClick={() => toggleTask(task.id)}>
                 {task.done ? (
                   <CheckCircle size={32} color="#00b894" />

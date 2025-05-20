@@ -22,23 +22,28 @@ export default function HeaderTask() {
   };
 
   return (
-    <div>
+    <div className="bg-white">
       <header className="flex justify-between items-center gap-4 bg-linear-to-r from-primary to-secondary text-white py-6 px-20">
         <div className="flex items-center gap-4">
           <CheckCheck size={58} />
-          <h1>Suas Tarefas!</h1>
+          <h1 className="font-open-sans font-semibold text-4xl">
+            Suas Tarefas!
+          </h1>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 font-open-sans text-lg">
           <p>
-            Total de tarefas: <span>{tasks.length}</span>
+            Total de tarefas:{" "}
+            <span className="font-semibold">{tasks.length}</span>
           </p>
           <p>
             Tarefas pendentes:{" "}
-            <span className="pendingTasks">{pendingTasks}</span>
+            <span className="text-danger font-semibold">{pendingTasks}</span>
           </p>
           <p>
             Tarefas finalizadas:{" "}
-            <span className="completedTasks">{completedTasks}</span>
+            <span className="text-chart-4" font-semibold>
+              {completedTasks}
+            </span>
           </p>
         </div>
       </header>
@@ -52,11 +57,11 @@ export default function HeaderTask() {
             placeholder="Digite uma nova tarefa"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
-            className="flex flex-1 px-3 py-4 border-2 border-secondary rounded-lg text-lg transition-all ease-in-out duration-500 focus:border-primary outline-0"
+            className="flex flex-1 px-3 py-4 border-2 border-secondary rounded-lg text-lg transition-all ease-in-out duration-200 focus:border-primary outline-0"
           />
           <button
             type="submit"
-            className="px-10 h-[64px] bg-primary rounded-lg text-white text-lg outline-0"
+            className="px-10 h-[64px] bg-primary rounded-lg text-white text-lg outline-0 cursor-pointer transition-all ease-in-out duration-500 hover:bg-secondary focus:bg-secondary active:bg-secondary"
           >
             Adicione uma tarefa
           </button>
