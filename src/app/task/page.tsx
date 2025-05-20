@@ -24,7 +24,7 @@ export default function TaskList() {
   const pendingTasks = tasks.length - completedTasks;
 
   return (
-    <main className="container">
+    <main>
       <header>
         <h1>Suas Tarefas!</h1>
       </header>
