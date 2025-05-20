@@ -1,10 +1,10 @@
 import { SquarePen, Trash2, CheckCircle, Circle } from "lucide-react";
 import { useTaskStore } from "../../stores/taskStore";
 
-export function TaskItem() {
+export default function TaskItem() {
   const { tasks, removeTask, editTask, toggleTask } = useTaskStore();
   return (
-    <div>
+    <div className="mx-auto max-w-3/5 mt-6">
       <ul className="ulList">
         {tasks.map((task) => (
           <li className="liList" key={task.id}>
@@ -40,5 +40,3 @@ export function TaskItem() {
     </div>
   );
 }
-
-export default TaskItem;

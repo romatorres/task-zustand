@@ -1,45 +1,28 @@
 "use client";
 
-import { type FormEvent, useState, useEffect } from "react";
-import { TaskItem } from "./item";
+import { useEffect } from "react";
+import HeaderTask from "./headerTask";
+import TaskItem from "./item";
 import { useTaskStore } from "../../stores/taskStore";
 
 export default function TaskList() {
-  const [newTask, setNewTask] = useState("");
-  const { tasks, addTask, fetchTasks } = useTaskStore();
+  const { tasks, fetchTasks } = useTaskStore();
 
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
-
-  /* Envia o evento do formulário para adicionar uma nova tarefa, e evita enviar uma tarefa vazia. */
-  const handleAddTask = (e: FormEvent) => {
-    e.preventDefault();
-    if (!newTask.trim()) return;
-    addTask(newTask);
-    setNewTask("");
-  };
 
   const completedTasks = tasks.filter((task) => task.done).length;
   const pendingTasks = tasks.length - completedTasks;
 
   return (
     <main>
-      <header>
-        <h1>Suas Tarefas!</h1>
-      </header>
-      <form onSubmit={handleAddTask} className="formTask">
-        <input
-          type="text"
-          placeholder="Digite uma nova tarefa"
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-        />
-        <button type="submit" className="add-btn">
-          Adicione uma tarefa
-        </button>
-      </form>
-      <TaskItem />
+      <div className="fixed top-0 w-full z-20">
+        <HeaderTask />
+      </div>
+      <div className="mt-60 z-10">
+        <TaskItem />
+      </div>
       <footer>
         <p>
           Total de tarefas: <span>{tasks.length}</span>
