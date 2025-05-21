@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -11,10 +11,11 @@ export async function GET() {
 
 // POST /api/tasks
 export async function POST(request: Request) {
-  const { text } = await request.json();
+  const { text, description } = await request.json();
   const task = await prisma.task.create({
     data: {
       text,
+      description,
     },
   });
   return NextResponse.json(task);
@@ -22,10 +23,10 @@ export async function POST(request: Request) {
 
 // PUT /api/tasks/:id
 export async function PUT(request: Request) {
-  const { id, text, done } = await request.json();
+  const { id, text, description, done } = await request.json();
   const task = await prisma.task.update({
     where: { id },
-    data: { text, done },
+    data: { text, description, done },
   });
   return NextResponse.json(task);
 }

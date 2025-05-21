@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import HeaderTask from "./headerTask";
-import TaskItem from "./item";
+import TaskItem from "./itemTask";
 import { useTaskStore } from "../../stores/taskStore";
 
 export default function TaskList() {

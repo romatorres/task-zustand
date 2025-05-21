@@ -10,10 +10,14 @@ npm run dev
 npm install @prisma/client zustand
 npm install prisma --save-dev
 
-npx prisma init
 
+## PARA INICIAR O PRISMA
+npx prisma init
 npx prisma migrate dev --name init
 npx prisma generate
+
+## PARA ATUALIZAR UM CAMPO NO PRISMA
+npx prisma migrate dev --name add_description_to_task
 
 DATABASE_URL="file:./dev.db"
 ```

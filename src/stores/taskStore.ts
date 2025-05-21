@@ -4,15 +4,16 @@ import { toast } from "sonner";
 type Task = {
   id: number;
   text: string;
+  description: string;
   done: boolean;
 };
 
 type TaskStore = {
   tasks: Task[];
   fetchTasks: () => Promise<void>;
-  addTask: (text: string) => void;
+  addTask: (text: string, description: string) => void;
   removeTask: (id: number) => void;
-  editTask: (id: number, text: string) => void;
+  editTask: (id: number, text: string, description: string) => void;
   toggleTask: (id: number) => void;
 };
 
@@ -28,14 +29,14 @@ export const useTaskStore = create<TaskStore>((set) => ({
   },
 
   /* METODO POST - ADICIONAR TAREFA */
-  addTask: async (text) => {
+  addTask: async (text, description) => {
     try {
       const response = await fetch("/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ text, description }),
       });
       if (!response.ok) {
         throw new Error("Falha ao adicionar tarefa");
@@ -72,14 +73,14 @@ export const useTaskStore = create<TaskStore>((set) => ({
     }
   },
 
-  editTask: async (id, text) => {
+  editTask: async (id, text, description) => {
     try {
       const response = await fetch("/api/tasks", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, text }),
+        body: JSON.stringify({ id, text, description }),
       });
       if (!response.ok) {
         throw new Error("Falha ao editar tarefa");
