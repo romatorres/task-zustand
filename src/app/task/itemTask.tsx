@@ -1,4 +1,4 @@
-import { SquarePen, Trash2, CheckCircle, Circle } from "lucide-react";
+import { SquarePen, Trash2, CheckCircle, Circle, Calendar } from "lucide-react";
 import { useTaskStore } from "../../stores/taskStore";
 import { useState } from "react";
 import {
@@ -8,6 +8,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import FormTask from "./formTask";
+
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
 export default function TaskItem() {
   const { tasks, removeTask, toggleTask } = useTaskStore();
@@ -22,6 +32,7 @@ export default function TaskItem() {
       </div>
     );
   }
+
   return (
     <div className="mx-auto max-w-3/5 mt-6 font-open-sans">
       <ul className="flex flex-col gap-4">
@@ -38,11 +49,15 @@ export default function TaskItem() {
                   <Circle size={32} color="#d63031" />
                 )}
               </button>
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-2">
                 <h3 className={task.done ? "textDone" : "none"}>
                   <span className="text-xl font-medium">{task.text}</span>
                 </h3>
                 <p className="text-base text-dark">{task.description}</p>
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <Calendar size={16} />
+                  <span>Criado em {formatDate(task.createdAt)}</span>
+                </div>
               </div>
             </div>
             <div className="btnList">

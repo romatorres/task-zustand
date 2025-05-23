@@ -6,6 +6,8 @@ type Task = {
   text: string;
   description: string;
   done: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type TaskStore = {
@@ -19,13 +21,18 @@ type TaskStore = {
 
 export const useTaskStore = create<TaskStore>((set) => ({
   tasks: [],
+
+  /* FETCH - BUSCAR TAREFA */
   fetchTasks: async () => {
     const response = await fetch("/api/tasks");
     if (!response.ok) {
       throw new Error("Falha ao buscar tarefas");
     }
     const tasks = await response.json();
-    set({ tasks });
+    const sortedTasks = tasks.sort((a: Task, b: Task) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    set({ tasks: sortedTasks });
   },
 
   /* METODO POST - ADICIONAR TAREFA */
@@ -42,15 +49,19 @@ export const useTaskStore = create<TaskStore>((set) => ({
         throw new Error("Falha ao adicionar tarefa");
       }
       const newTask = await response.json();
-      set((state) => ({
-        tasks: [...state.tasks, newTask],
-      }));
+      set((state) => {
+        const updatedTasks = [...state.tasks, newTask].sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        return { tasks: updatedTasks };
+      });
       toast.success("Tarefa adicionada com sucesso!");
     } catch {
       toast.error("Erro ao adicionar tarefa");
     }
   },
 
+  /* METODO TOGGLE - ALTERAR O STATUS DA TAREFA */
   toggleTask: async (id) => {
     try {
       const task = useTaskStore.getState().tasks.find((t) => t.id === id);
@@ -73,6 +84,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
     }
   },
 
+  /* METODO PUT - ALTERAR TAREFA */
   editTask: async (id, text, description) => {
     try {
       const response = await fetch("/api/tasks", {
@@ -95,6 +107,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
     }
   },
 
+  /* METODO DELETE - DELETAR TAREFA */
   removeTask: async (id) => {
     try {
       await fetch("/api/tasks", {
