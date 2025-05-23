@@ -12,6 +12,16 @@ import FormTask from "./formTask";
 export default function TaskItem() {
   const { tasks, removeTask, toggleTask } = useTaskStore();
   const [editingTask, setEditingTask] = useState<number | null>(null);
+
+  if (tasks.length === 0) {
+    return (
+      <div className="flex justify-center items-center min-h-[200px]">
+        <p className="text-lg text-gray-500">
+          Nenhuma tarefa encontrada. Crie uma nova tarefa!
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="mx-auto max-w-3/5 mt-6 font-open-sans">
       <ul className="flex flex-col gap-4">
@@ -49,11 +59,7 @@ export default function TaskItem() {
                   </button>
                 </DialogTrigger>
                 <DialogContent>
-                  <DialogTitle>
-                    <span className="text-2xl font-open-sans text-primary font-semibold">
-                      Editar Tarefa
-                    </span>
-                  </DialogTitle>
+                  <DialogTitle>Editar Tarefa</DialogTitle>
                   <FormTask
                     taskId={task.id}
                     initialData={{

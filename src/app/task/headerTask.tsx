@@ -38,9 +38,7 @@ export default function HeaderTask() {
           </p>
           <p>
             Tarefas finalizadas:{" "}
-            <span className="text-chart-4" font-semibold>
-              {completedTasks}
-            </span>
+            <span className="text-chart-4 font-semibold">{completedTasks}</span>
           </p>
         </div>
       </header>
@@ -55,11 +53,7 @@ export default function HeaderTask() {
             </button>
           </DialogTrigger>
           <DialogContent>
-            <DialogTitle>
-              <span className="text-2xl font-open-sans text-primary font-semibold">
-                Nova Tarefa!{" "}
-              </span>
-            </DialogTitle>
+            <DialogTitle>Nova Tarefa! </DialogTitle>
             <FormTask
               onSubmit={() => setOpenDialog(false)}
               onCancel={() => setOpenDialog(false)}
