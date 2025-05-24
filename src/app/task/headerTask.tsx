@@ -2,7 +2,7 @@
 
 import { useTaskStore } from "../../stores/taskStore";
 import { useState } from "react";
-import { CheckCheck } from "lucide-react";
+import { CheckCheck, Search } from "lucide-react";
 import FormTask from "./formTask";
 import {
   Dialog,
@@ -47,7 +47,7 @@ export default function HeaderTask() {
           <DialogTrigger asChild>
             <button
               type="button"
-              className="w-full h-[64px] bg-primary rounded-lg text-white text-lg outline-0 cursor-pointer transition-all ease-in-out duration-500 hover:bg-secondary focus:bg-secondary active:bg-secondary"
+              className="w-full h-16 bg-primary rounded-lg text-white text-lg outline-0 cursor-pointer transition-all ease-in-out duration-500 hover:bg-secondary focus:bg-secondary active:bg-secondary"
             >
               Adicione uma nova tarefa
             </button>
@@ -60,6 +60,13 @@ export default function HeaderTask() {
             />
           </DialogContent>
         </Dialog>
+        <div className="relative">
+          <input
+            type="text"
+            className="flex pl-10 px-3 py-4 mt-6 w-full text-primary font-medium border-2 border-secondary rounded-lg text-lg transition-all ease-in-out duration-200 focus:border-primary outline-0"
+          />
+          <Search className="absolute left-4 top-5.5 h-5 w-5 text-primary" />
+        </div>
       </div>
     </div>
   );
