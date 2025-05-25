@@ -1,4 +1,11 @@
-import { SquarePen, Trash2, CheckCircle, Circle, Calendar } from "lucide-react";
+import {
+  SquarePen,
+  Trash2,
+  CheckCircle,
+  Circle,
+  Calendar,
+  TriangleAlert,
+} from "lucide-react";
 import { useTaskStore } from "../../stores/taskStore";
 import { useState } from "react";
 import {
@@ -95,7 +102,7 @@ export default function TaskItem() {
                 onOpenChange={(open) => !open && setDeletingTask(null)}
               >
                 <DialogTrigger asChild>
-                  <button 
+                  <button
                     className="btnDanger"
                     onClick={() => setDeletingTask(task.id)}
                   >
@@ -104,14 +111,18 @@ export default function TaskItem() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogTitle>Excluir Tarefa</DialogTitle>
-                  <p className="text-base text-gray-500">
-                    Tem certeza que deseja excluir esta tarefa?
-                  </p>
+                  <div className="flex flex-col gap-3 text-danger items-center">
+                    <TriangleAlert size={46} />
+                    <p className="text-2xl text-gray-800">
+                      Tem certeza que deseja excluir esta tarefa? Essa ação não
+                      pode ser desfeita.
+                    </p>
+                  </div>
                   <div className="flex gap-2 justify-end">
                     <button
                       type="button"
                       onClick={() => setDeletingTask(null)}
-                      className="px-10 h-14 w-full bg-gray-300 rounded-lg text-gray-700 text-lg outline-0 cursor-pointer transition-all ease-in-out duration-500 hover:bg-gray-400 focus:bg-gray-400 active:bg-gray-400"
+                      className="px-10 h-14 w-full bg-gray-300 rounded-lg text-gray-700 text-lg outline-0 cursor-pointer transition-all ease-in-out duration-500 hover:bg-gray-400 active:bg-gray-400"
                     >
                       Cancelar
                     </button>
