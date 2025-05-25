@@ -22,6 +22,7 @@ function formatDate(dateString: string) {
 export default function TaskItem() {
   const { tasks, removeTask, toggleTask } = useTaskStore();
   const [editingTask, setEditingTask] = useState<number | null>(null);
+  const [deletingTask, setDeletingTask] = useState<number | null>(null);
 
   if (tasks.length === 0) {
     return (
@@ -61,6 +62,7 @@ export default function TaskItem() {
               </div>
             </div>
             <div className="btnList">
+              {/* EDITAR TAREFA */}
               <Dialog
                 open={editingTask === task.id}
                 onOpenChange={(open) => !open && setEditingTask(null)}
@@ -86,9 +88,45 @@ export default function TaskItem() {
                   />
                 </DialogContent>
               </Dialog>
-              <button className="btnDanger" onClick={() => removeTask(task.id)}>
-                <Trash2 />
-              </button>
+
+              {/* EXCLUIR TAREFA */}
+              <Dialog
+                open={deletingTask === task.id}
+                onOpenChange={(open) => !open && setDeletingTask(null)}
+              >
+                <DialogTrigger asChild>
+                  <button 
+                    className="btnDanger"
+                    onClick={() => setDeletingTask(task.id)}
+                  >
+                    <Trash2 />
+                  </button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogTitle>Excluir Tarefa</DialogTitle>
+                  <p className="text-base text-gray-500">
+                    Tem certeza que deseja excluir esta tarefa?
+                  </p>
+                  <div className="flex gap-2 justify-end">
+                    <button
+                      type="button"
+                      onClick={() => setDeletingTask(null)}
+                      className="px-10 h-14 w-full bg-gray-300 rounded-lg text-gray-700 text-lg outline-0 cursor-pointer transition-all ease-in-out duration-500 hover:bg-gray-400 focus:bg-gray-400 active:bg-gray-400"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      className="px-10 h-14 w-full bg-danger rounded-lg text-white text-lg outline-0 cursor-pointer transition-all ease-in-out duration-500 hover:bg-red-600 focus:bg-gray-400 active:bg-gray-400"
+                      onClick={() => {
+                        removeTask(task.id);
+                        setDeletingTask(null);
+                      }}
+                    >
+                      Excluir
+                    </button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </li>
         ))}
