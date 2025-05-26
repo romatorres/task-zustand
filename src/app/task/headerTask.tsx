@@ -12,11 +12,15 @@ import {
 } from "@/components/ui/dialog";
 
 export default function HeaderTask() {
-  const { tasks } = useTaskStore();
+  const { tasks, setSearchTerm } = useTaskStore();
   const [openDialog, setOpenDialog] = useState(false);
 
   const completedTasks = tasks.filter((task) => task.done).length;
   const pendingTasks = tasks.length - completedTasks;
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <div className="bg-white">
@@ -65,6 +69,7 @@ export default function HeaderTask() {
             type="text"
             placeholder="Pesquise por uma tarefa"
             className="flex pl-10 px-3 py-4 mt-6 w-full text-primary font-medium placeholder:font-normal border-2 border-secondary rounded-lg text-lg transition-all ease-in-out duration-200 focus:border-primary outline-0"
+            onChange={handleSearch}
           />
           <Search className="absolute left-4 top-5.5 h-5 w-5 text-primary" />
         </div>

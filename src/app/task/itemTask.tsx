@@ -27,15 +27,17 @@ function formatDate(dateString: string) {
 }
 
 export default function TaskItem() {
-  const { tasks, removeTask, toggleTask } = useTaskStore();
+  const { filteredTasks, removeTask, toggleTask, searchTerm } = useTaskStore();
   const [editingTask, setEditingTask] = useState<number | null>(null);
   const [deletingTask, setDeletingTask] = useState<number | null>(null);
 
-  if (tasks.length === 0) {
+  if (filteredTasks.length === 0) {
     return (
       <div className="flex justify-center items-center min-h-[200px]">
         <p className="text-lg text-gray-500">
-          Nenhuma tarefa encontrada. Crie uma nova tarefa!
+          {searchTerm.trim()
+            ? `Nenhuma tarefa encontrada para "${searchTerm}". Tente outra busca!`
+            : "Nenhuma tarefa encontrada. Crie uma nova tarefa!"}
         </p>
       </div>
     );
@@ -44,7 +46,7 @@ export default function TaskItem() {
   return (
     <div className="mx-auto max-w-3/5 mt-6 font-open-sans">
       <ul className="flex flex-col gap-4">
-        {tasks.map((task) => (
+        {filteredTasks.map((task) => (
           <li
             className="flex justify-between items-center px-6 py-9 bg-[#f7f2fc] rounded-lg shadow-md text-xl"
             key={task.id}

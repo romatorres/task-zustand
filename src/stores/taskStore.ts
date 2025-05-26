@@ -12,6 +12,9 @@ type Task = {
 
 type TaskStore = {
   tasks: Task[];
+  searchTerm: string;
+  filteredTasks: Task[];
+  setSearchTerm: (term: string) => void;
   fetchTasks: () => Promise<void>;
   addTask: (text: string, description: string) => void;
   removeTask: (id: number) => void;
@@ -19,8 +22,28 @@ type TaskStore = {
   toggleTask: (id: number) => void;
 };
 
-export const useTaskStore = create<TaskStore>((set) => ({
+export const useTaskStore = create<TaskStore>((set, get) => ({
   tasks: [],
+  searchTerm: "",
+  filteredTasks: [],
+
+  setSearchTerm: (term) => {
+    set({ searchTerm: term });
+    const { tasks } = get();
+    
+    if (!term.trim()) {
+      set({ filteredTasks: tasks });
+      return;
+    }
+    
+    const filtered = tasks.filter(
+      (task) => 
+        task.text.toLowerCase().includes(term.toLowerCase()) || 
+        task.description.toLowerCase().includes(term.toLowerCase())
+    );
+    
+    set({ filteredTasks: filtered });
+  },
 
   /* FETCH - BUSCAR TAREFA */
   fetchTasks: async () => {
@@ -32,7 +55,10 @@ export const useTaskStore = create<TaskStore>((set) => ({
     const sortedTasks = tasks.sort((a: Task, b: Task) => 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
-    set({ tasks: sortedTasks });
+    set({ 
+      tasks: sortedTasks,
+      filteredTasks: sortedTasks 
+    });
   },
 
   /* METODO POST - ADICIONAR TAREFA */
@@ -53,7 +79,23 @@ export const useTaskStore = create<TaskStore>((set) => ({
         const updatedTasks = [...state.tasks, newTask].sort(
           (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
-        return { tasks: updatedTasks };
+        
+        // Atualiza também as tarefas filtradas
+        const { searchTerm } = state;
+        let updatedFilteredTasks = updatedTasks;
+        
+        if (searchTerm.trim()) {
+          updatedFilteredTasks = updatedTasks.filter(
+            (task) => 
+              task.text.toLowerCase().includes(searchTerm.toLowerCase()) || 
+              task.description.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+        
+        return { 
+          tasks: updatedTasks,
+          filteredTasks: updatedFilteredTasks
+        };
       });
       toast.success("Tarefa adicionada com sucesso!");
     } catch {
@@ -74,9 +116,19 @@ export const useTaskStore = create<TaskStore>((set) => ({
           body: JSON.stringify({ id, done: !task.done }),
         });
         const updatedTask = await response.json();
-        set((state) => ({
-          tasks: state.tasks.map((t) => (t.id === id ? updatedTask : t)),
-        }));
+        set((state) => {
+          const updatedTasks = state.tasks.map((t) => (t.id === id ? updatedTask : t));
+          
+          // Atualiza também as tarefas filtradas
+          const updatedFilteredTasks = state.filteredTasks.map((t) => 
+            t.id === id ? updatedTask : t
+          );
+          
+          return {
+            tasks: updatedTasks,
+            filteredTasks: updatedFilteredTasks
+          };
+        });
         toast.success("Status da tarefa atualizado!");
       }
     } catch {
@@ -98,9 +150,33 @@ export const useTaskStore = create<TaskStore>((set) => ({
         throw new Error("Falha ao editar tarefa");
       }
       const updatedTask = await response.json();
-      set((state) => ({
-        tasks: state.tasks.map((task) => (task.id === id ? updatedTask : task)),
-      }));
+      set((state) => {
+        const updatedTasks = state.tasks.map((task) => (task.id === id ? updatedTask : task));
+        
+        // Atualiza também as tarefas filtradas
+        const { searchTerm } = state;
+        let updatedFilteredTasks = state.filteredTasks;
+        
+        // Se a tarefa editada está nas tarefas filtradas, atualize-a
+        if (state.filteredTasks.some(t => t.id === id)) {
+          updatedFilteredTasks = state.filteredTasks.map((t) => 
+            t.id === id ? updatedTask : t
+          );
+        } 
+        // Se a tarefa editada não está nas tarefas filtradas, mas agora corresponde ao termo de busca
+        else if (
+          searchTerm.trim() && 
+          (updatedTask.text.toLowerCase().includes(searchTerm.toLowerCase()) || 
+           updatedTask.description.toLowerCase().includes(searchTerm.toLowerCase()))
+        ) {
+          updatedFilteredTasks = [...state.filteredTasks, updatedTask];
+        }
+        
+        return {
+          tasks: updatedTasks,
+          filteredTasks: updatedFilteredTasks
+        };
+      });
       toast.success("Tarefa editada com sucesso!");
     } catch {
       toast.error("Erro ao editar tarefa");
@@ -119,6 +195,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
       });
       set((state) => ({
         tasks: state.tasks.filter((t) => t.id !== id),
+        filteredTasks: state.filteredTasks.filter((t) => t.id !== id)
       }));
       toast.success("Tarefa removida com sucesso!");
     } catch {
